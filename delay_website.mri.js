@@ -1,24 +1,57 @@
-document.getElementById('upload-btn').addEventListener('click', function() {
-    var fileInput = document.getElementById('image-upload');
-    var file = fileInput.files[0];
+// document.getElementById('upload-btn').addEventListener('click', function() {
+//     var fileInput = document.getElementById('image-upload');
+//     var file = fileInput.files[0];
 
-    if (file) {
-      var imageUrl = URL.createObjectURL(file);
-      displayImageWithDelay(imageUrl, 'uploaded-image');
-    } else {
-      alert('Please select a file to upload.');
-    }
-  });
+//     if (file) {
+//       var imageUrl = URL.createObjectURL(file);
+//       displayImageWithDelay(imageUrl, 'uploaded-image');
+//     } else {
+//       alert('Please select a file to upload.');
+//     }
+//   });
 
-  function displayImageWithDelay(imageUrl, imageDivId) {
-    var imageDiv = document.getElementById(imageDivId);
-    imageDiv.innerHTML = '<img src="' + imageUrl + '" alt="Image">';
+//   function displayImageWithDelay(imageUrl, imageDivId) {
+//     var imageDiv = document.getElementById(imageDivId);
+//     imageDiv.innerHTML = '<img src="' + imageUrl + '" alt="Image">';
     
-    // Schedule display of a random image after the delay
-    setTimeout(function() {
-      displayRandomImage('random-image');
-    }, 3000); // Delay of 3 seconds
+//     // Schedule display of a random image after the delay
+//     setTimeout(function() {
+//       displayRandomImage('random-image');
+//     }, 3000); // Delay of 3 seconds
+//   }
+
+document.getElementById('upload-btn').addEventListener('click', function() {
+  var fileInput = document.getElementById('image-upload');
+  var file = fileInput.files[0];
+
+  if (file) {
+      var imageUrl = URL.createObjectURL(file);
+      // Create a new Image object
+      var img = new Image();
+      img.src = imageUrl;
+
+      // When the image has loaded
+      img.onload = function() {
+          if (img.width === 389 && img.height === 389) {
+              displayImageWithDelay(imageUrl, 'uploaded-image');
+          } else {
+              alert('Please upload an image with dimensions 389x389 pixels.');
+          }
+      };
+  } else {
+      alert('Please select a file to upload.');
   }
+});
+
+function displayImageWithDelay(imageUrl, imageDivId) {
+  var imageDiv = document.getElementById(imageDivId);
+  imageDiv.innerHTML = '<img src="' + imageUrl + '" alt="Image">';
+  
+  // Schedule display of a random image after the delay
+  setTimeout(function() {
+      displayRandomImage('random-image');
+  }, 3000); // Delay of 3 seconds
+}
 
   function displayRandomImage(imageDivId) {
     var imageUrls = [  // Update these URLs with your image paths
